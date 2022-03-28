@@ -1,0 +1,11 @@
+[edge]
+38.129.16.25
+
+[edge:vars]
+ansible_network_os=cisco.nxos.nxos
+ansible_user=admin
+ansible_ssh_pass=qXq6vQPmU28U
+ansible_become=true
+ansible_become_method=enable
+ansible_become_pass=qXq6vQPmU28U
+ansible_connection=ansible.netcommon.network_cli

@@ -1,0 +1,50 @@
+---
+- hosts: all
+  tasks:
+
+  - name: Parse interface
+    ansible.utils.cli_parse: 
+      command: "show interface"
+      parser: 
+        name: ansible.netcommon.native
+      set_fact: interfaces 
+  - debug:
+      var: interfaces
+
+  - name: Check for drop in interface couters
+    assert:
+      that:
+        - 0 == {{ item.value["packet_drops"].values()|min }}
+      fail_msg: >
+        packets dropped in interface "{{ item.key }}"
+    when: '"packet_drops" in item.value'
+    loop: "{{ lookup('dict', interfaces) }}"
+
+  # Use the show hardware rate-limit command to determine if packets are being dropped because of a rate limit.
+  #
+  - name: Parse rate limit
+    ansible.utils.cli_parse: 
+      command: "show hardware rate-limit"
+      parser: 
+        name: ansible.netcommon.native
+      set_fact: rate_limit 
+  - debug:
+      var: rate_limit
+
+  - name: Check for drop due to rate-limit
+    #ansible.builtin.shell: "echo {{ item.value }}"
+    assert:
+      that:
+        - item.value["dropped"] == 0
+      fail_msg: >
+        Dropped due to rate_limit class "{{ item.key }}"
+    loop: "{{ rate_limit | dict2items }}"
+    loop_control:
+      loop_var: item
+
+  - name: Check for reachability using ping
+    shell: "ping {{ inventory_hostname }} -c 5"
+    register: out
+  - assert:
+      that:
+        - "'0% packet loss' in out.stdout"
