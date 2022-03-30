@@ -1,15 +1,11 @@
-- name: show system resources
+- name: Parse show system resources output
   ansible.utils.cli_parse: 
     command: show system resources | json
     parser: 
       name: ansible.utils.json
     set_fact: resources 
-- debug:
-    var: resources
 
 - name: Check for memory usage
-  #debug:
-  #      msg: "{{ item.value }}"
   assert:
     that:
       - health_check.threshold.memory_used == item.value

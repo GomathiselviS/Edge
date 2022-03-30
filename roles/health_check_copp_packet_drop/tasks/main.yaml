@@ -1,11 +1,9 @@
-- name: Parse policy-map
+- name: Parse show policy-map interface control-pane output
   ansible.utils.cli_parse: 
     command: "show policy-map interface control-plane"
     parser: 
       name: ansible.netcommon.native
     set_fact: copp 
-- debug:
-    var: copp
 
 - name: Check for drop in copp couters
   assert:
