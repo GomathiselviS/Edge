@@ -1,4 +1,4 @@
-- name: Parse interface
+- name: Parse show interface output
   ansible.utils.cli_parse: 
     command: "show interface"
     parser: 

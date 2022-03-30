@@ -1,11 +1,9 @@
-- name: show mac address-table
+- name: Parse show mac address-table output
   ansible.utils.cli_parse: 
     command: show mac address-table | json
     parser: 
       name: ansible.utils.json
     set_fact: address_table 
-- debug:
-    var: address_table
 
 - name: Loop through mac address table entries
   set_fact:

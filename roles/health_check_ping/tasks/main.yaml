@@ -1,4 +1,4 @@
-- name: Check for reachability using ping
+- name: Check reachability from the execution node to the edge node
   shell: "ping {{ inventory_hostname }} -c 5"
   register: out
 - assert:

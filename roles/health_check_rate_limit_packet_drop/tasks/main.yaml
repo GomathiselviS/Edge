@@ -1,16 +1,11 @@
-# Use the show hardware rate-limit command to determine if packets are being dropped because of a rate limit.
-#
-- name: Parse rate limit
+- name: Parse show hardware rate-limit output
   ansible.utils.cli_parse: 
     command: "show hardware rate-limit"
     parser: 
       name: ansible.netcommon.native
     set_fact: rate_limit 
-- debug:
-    var: rate_limit
 
 - name: Check for drop due to rate-limit
-  #ansible.builtin.shell: "echo {{ item.value }}"
   assert:
     that:
       - item.value["dropped"] == 0
