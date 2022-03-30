@@ -1,8 +1,0 @@
----
-- example: "  L3 glean                 100                    0                    0                    0"
-  getval: '  (?P<class>[\s\-A-Za-z3]+?)\s+\d+\s+(?P<allow>\d+)\s+(?P<drop>\d+)\s+\d+'
-  result:
-    "{{ class }}":
-      allowed: "{{ allow }}"
-      dropped: "{{ drop }}"
-  shared: true
