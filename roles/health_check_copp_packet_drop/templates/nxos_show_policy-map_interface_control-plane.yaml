@@ -1,0 +1,19 @@
+---
+- example: class-map copp-system-p-class-nat-flow (match-any)
+  getval: '\s*class-map\s+(?P<name>\S+)\s+\(\S+\)'
+  result:
+    "{{ name }}":
+      class_map: "{{ name }}"
+  shared: true
+
+- example: transmitted \d+ packets;
+  getval: '\s+transmitted (?P<pkt>\d+) packets;'
+  result:
+    "{{ name }}":
+      transmitted: "{{ pkt }}"
+
+- example: dropped \d+ packets;
+  getval: '\s+dropped (?P<pkt>\d+) packets;'
+  result:
+    "{{ name }}":
+      dropped: "{{ pkt }}"

@@ -1,0 +1,35 @@
+---
+- example: Ethernet1/1 is up
+  getval: '(?P<name>\S+) is (?P<oper_state>\S+)'
+  result:
+    "{{ name }}":
+      name: "{{ name }}"
+      state:
+        operating: "{{ oper_state }}"
+  shared: true
+
+- example: admin state is up, Dedicated Interface
+  getval: 'admin state is (?P<admin_state>\S+),'
+  result:
+    "{{ name }}":
+      name: "{{ name }}"
+      state:
+        admin: "{{ admin_state }}"
+
+- example: "  Hardware: Ethernet, address: 5254.005a.f8b5 (bia 5254.005a.f8b5)"
+  getval: '\s+Hardware: (?P<hardware>.*), address: (?P<mac>\S+)'
+  result:
+    "{{ name }}":
+      hardware: "{{ hardware }}"
+      mac_address: "{{ mac }}"
+
+- example: "    0 watchdog  0 bad etype drop  0 bad proto drop  0 if down drop"
+  getval:  '\s+(?P<watchdog>\d+)\s+watchdog\s+(?P<bad_etype>\d+)\s+bad etype drop\s+(?P<bad_proto>\d+)\s+bad proto drop\s+(?P<if_down>\d+)\s+if down drop'
+  # getval:  '\s+(?P<watchdog>\d+)\s+watchdog.+'
+  result:
+      "{{ name }}":
+          packet_drops:
+            watchdog: "{{ watchdog|d('0') }}"
+            bad_etype: "{{ bad_etype|d('0') }}"
+            bad_proto: "{{ bad_proto|d('0') }}"
+            if_down: "{{ if_down|d('0') }}"

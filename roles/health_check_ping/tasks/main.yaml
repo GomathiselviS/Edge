@@ -1,0 +1,6 @@
+- name: Check for reachability using ping
+  shell: "ping {{ inventory_hostname }} -c 5"
+  register: out
+- assert:
+    that:
+      - "'0% packet loss' in out.stdout"

@@ -1,0 +1,15 @@
+---
+- example: '"memory_usage_total": "16405140"'
+  getval: '\s*"memory_usage_total": "(?P<val>\d+)"'
+  result:
+      memory_total: "{{ val }}"
+
+- example: '"memory_usage_used": "16405140"'
+  getval: '\s*"memory_usage_used": "(?P<val>\d+)"'
+  result:
+      memory_used: "{{ val }}"
+
+- example: '"memory_usage_free": "16405140"'
+  getval: '\s*"memory_usage_free": "(?P<val>\d+)"'
+  result:
+      memory_free: "{{ val }}"

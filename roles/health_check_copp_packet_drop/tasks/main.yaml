@@ -1,0 +1,17 @@
+- name: Parse policy-map
+  ansible.utils.cli_parse: 
+    command: "show policy-map interface control-plane"
+    parser: 
+      name: ansible.netcommon.native
+    set_fact: copp 
+- debug:
+    var: copp
+
+- name: Check for drop in copp couters
+  assert:
+    that:
+      - 0 == {{ item.value["dropped"].values()|min }}
+    fail_msg: >
+      packets dropped by class map "{{ item.key }}"
+  when: '"dropped" in item.value'
+  loop: "{{ lookup('dict', copp) }}"

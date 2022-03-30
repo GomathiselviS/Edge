@@ -1,0 +1,19 @@
+- name: show system resources
+  ansible.utils.cli_parse: 
+    command: show system resources | json
+    parser: 
+      name: ansible.utils.json
+    set_fact: resources 
+- debug:
+    var: resources
+
+- name: Check for memory usage
+  #debug:
+  #      msg: "{{ item.value }}"
+  assert:
+    that:
+      - health_check.threshold.memory_used == item.value
+    fail_msg: >
+      Memory usage exceeded - Threshold "{{ health_check.threshold.memory_used }}" , Memomory used "{{ item.value }}"
+  when: "item.key == 'memory_usage_used'"
+  loop: "{{ lookup('dict', resources) }}"

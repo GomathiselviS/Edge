@@ -1,0 +1,17 @@
+- name: Parse interface
+  ansible.utils.cli_parse: 
+    command: "show interface"
+    parser: 
+      name: ansible.netcommon.native
+    set_fact: interfaces 
+- debug:
+    var: interfaces
+
+- name: Check for drop in interface couters
+  assert:
+    that:
+      - 0 == {{ item.value["packet_drops"].values()|min }}
+    fail_msg: >
+      packets dropped in interface "{{ item.key }}"
+  when: '"packet_drops" in item.value'
+  loop: "{{ lookup('dict', interfaces) }}"

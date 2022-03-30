@@ -1,0 +1,5 @@
+---
+- example: '"disp_mac_addr": "fa7b.23fd.1b08"'
+  getval: '\s*"disp_mac_addr": "(?P<val>.+)"'
+  result:
+      disp_mac_addr: "{{ val }}"

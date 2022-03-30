@@ -1,0 +1,21 @@
+- name: show mac address-table
+  ansible.utils.cli_parse: 
+    command: show mac address-table | json
+    parser: 
+      name: ansible.utils.json
+    set_fact: address_table 
+- debug:
+    var: address_table
+
+- name: Loop through mac address table entries
+  set_fact:
+    mac_present: "yes"
+  when: "health_check.mac_address == item.value['ROW_mac_address']['disp_mac_addr']"
+  loop: "{{ address_table | dict2items }}"
+
+- name: Check for mac address in mac table
+  assert:
+    that:
+      - mac_present is defined
+    fail_msg: >
+      "{{ health_check.mac_address }}" is not present
