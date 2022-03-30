@@ -1,5 +1,5 @@
 [edge]
-38.129.16.25
+38.129.16.55
 
 [edge:vars]
 ansible_network_os=cisco.nxos.nxos
