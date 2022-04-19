@@ -1,0 +1,8 @@
+---
+- example: "10.170.250.2    4 65535       0       0        0    0    0 00:41:25 Idle"
+  getval: '(?P<neigh>[\d\.]+)\s+\d+\s+\d+\s+\d+\s+\d+\s+\d+\s+\d+\s+\d+\s+[\d:]+\s+(?P<state>\w+)\s*'
+  result:
+    "{{ neigh }}":
+      neighbor: "{{ neigh }}"
+      state: "{{ state }}"
+  shared: true

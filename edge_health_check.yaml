@@ -10,3 +10,4 @@
     - health_check_mac_address
     - health_check_ping
     - health_check_memory
+    - health_check_bgp_summary

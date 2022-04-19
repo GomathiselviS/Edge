@@ -1,34 +1,93 @@
-bgp_address_family:
+node1:
+  bgp_address_family:
+      address_family:
+      -   afi: ipv4
+          safi: unicast
+          networks:
+          -   prefix: 192.0.2.0/24
+          -   prefix: 192.0.3.0/24
+          -   prefix: 192.0.4.0/24
+      as_number: '65536'
+  bgp_neighbor_address_family:
+      as_number: '65536'
+      neighbors:
+      -   neighbor_address: 172.31.34.28
+          address_family:
+          -   afi: ipv4
+              safi: unicast
+      -   neighbor_address: 172.31.35.140
+          address_family:
+          -   afi: ipv4
+              safi: unicast
+  bgp_global:
+      as_number: '65536'
+      log_neighbor_changes: true
+      neighbors:
+      -   neighbor_address: 172.31.34.28
+          remote_as: 65536
+      -   neighbor_address: 172.31.35.140
+          remote_as: 65536
+node2:
+  bgp_address_family:
     address_family:
     -   afi: ipv4
-        neighbor:
-        -   activate: true
-            address: 172.31.34.28
-        -   activate: true
-            address: 172.31.35.140
-        network:
-        -   address: 192.0.2.0
-        -   address: 192.0.3.0
-        -   address: 192.0.4.0
+        safi: unicast
+        networks:
+        -   prefix: 198.51.100.0/24
+        -   prefix: 198.51.101.0/24
+        -   prefix: 198.51.102.0/24
     as_number: '65536'
-bgp_global:
+  bgp_neighbor_address_family:
+      as_number: '65536'
+      neighbors:
+      -   neighbor_address: 172.31.32.213
+          address_family:
+          -   afi: ipv4
+              safi: unicast
+      -   neighbor_address: 172.31.35.140
+          address_family:
+          -   afi: ipv4
+              safi: unicast
+  bgp_global:
     as_number: '65536'
-    bgp:
-        log_neighbor_changes: true
-    neighbor:
-    -   address: 172.31.34.28
+    log_neighbor_changes: true
+    neighbors:
+    -   neighbor_address: 172.31.32.213
         remote_as: 65536
-    -   address: 172.31.35.140
+    -   neighbor_address: 172.31.35.140
         remote_as: 65536
-    -   activate: true
-        address: 172.31.34.28
-    -   activate: true
-        address: 172.31.35.140
+node3:
+  bgp_address_family:
+    address_family:
+    -   afi: ipv4
+        safi: unicast
+        networks:
+        -   prefix: 203.0.113.0/24
+        -   prefix: 203.0.114.0/24
+        -   prefix: 203.0.115.0/24
+    as_number: '65536'
+  bgp_neighbor_address_family:
+      as_number: '65536'
+      neighbors:
+      -   neighbor_address: 172.31.32.213
+          address_family:
+          -   afi: ipv4
+              safi: unicast
+      -   neighbor_address: 172.31.34.28
+          address_family:
+          -   afi: ipv4
+              safi: unicast
+  bgp_global:
+    as_number: '65536'
+    log_neighbor_changes: true
+    neighbors:
+    -   neighbor_address: 172.31.32.213
+        remote_as: 65536
+    -   neighbor_address: 172.31.34.28
+        remote_as: 65536
 
 health_check:
   threshold:
     memory_used: 3900000
   mac_address: fa7b.23fd.1b08
-
-
-
+  bgp_neighbor: "10.170.250.1"

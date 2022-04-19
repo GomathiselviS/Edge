@@ -1,7 +1,18 @@
-[edge]
-38.129.16.55
+[node1]
+162.253.55.61
+[node2]
+199.19.213.199
+[node3]
+199.19.213.244
 
-[edge:vars]
+[node1:vars]
+node_name=node1
+[node2:vars]
+node_name=node2
+[node3:vars]
+node_name=node3
+
+[all:vars]
 ansible_network_os=cisco.nxos.nxos
 ansible_user=admin
 ansible_ssh_pass=qXq6vQPmU28U

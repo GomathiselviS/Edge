@@ -1,0 +1,105 @@
+---
+- hosts: all
+  gather_facts: true
+  vars_files:
+     - vars/main.yaml
+  tasks:
+    - name: "Enable BGP"
+      cisco.nxos.nxos_config:
+        lines: feature bgp
+        save_when: modified
+
+    - name: "Node1: Configure BGP"
+      cisco.nxos.nxos_bgp_global:
+        config: "{{ node1.bgp_global }}"
+        state: replaced
+      when: node_name == "node1"
+      register: result
+
+    - debug:
+        var: result
+      when: result.changed == True
+
+    - name: "Node1: Configure BGP Address Family"
+      cisco.nxos.nxos_bgp_address_family:
+        config: "{{ node1.bgp_address_family }}"
+        state: overridden
+      when: node_name == "node1"
+      register: result
+    
+    - debug:
+        var: result
+      when: result.changed == True
+
+    - name: "Node1: Configure BGP neighbor Address Family"
+      cisco.nxos.nxos_bgp_neighbor_address_family:
+        config: "{{ node1.bgp_neighbor_address_family }}"
+        state: overridden
+      when: node_name == "node1"
+      register: result
+    
+    - debug:
+        var: result
+      when: result.changed == True
+
+    - name: "Node2: Configure BGP"
+      cisco.nxos.nxos_bgp_global:
+        config: "{{ node2.bgp_global }}"
+        state: replaced
+      when: node_name == "node2"
+      register: result
+
+    - debug:
+        var: result
+      when: result.changed == True
+
+    - name: "Node2: Configure BGP Address Family"
+      cisco.nxos.nxos_bgp_address_family:
+        config: "{{ node2.bgp_address_family }}"
+        state: overridden
+      when: node_name == "node2"
+      register: result
+    
+    - debug:
+        var: result
+      when: result.changed == True
+
+    - name: "Node2: Configure BGP neighbor Address Family"
+      cisco.nxos.nxos_bgp_neighbor_address_family:
+        config: "{{ node2.bgp_neighbor_address_family }}"
+        state: overridden
+      when: node_name == "node2"
+      register: result
+    
+    - debug:
+        var: result
+      when: result.changed == True
+
+    - name: "Node3: Configure BGP"
+      cisco.nxos.nxos_bgp_global:
+        config: "{{ node3.bgp_global }}"
+        state: replaced
+      when: node_name == "node3"
+      register: result
+
+    - debug:
+        var: result
+      when: result.changed == True
+
+    - name: "Node3: Configure BGP Address Family"
+      cisco.nxos.nxos_bgp_address_family:
+        config: "{{ node3.bgp_address_family }}"
+        state: overridden
+      when: node_name == "node3"
+      register: result
+    
+    - name: "Node3: Configure BGP neighbor Address Family"
+      cisco.nxos.nxos_bgp_neighbor_address_family:
+        config: "{{ node3.bgp_neighbor_address_family }}"
+        state: overridden
+      when: node_name == "node3"
+      register: result
+    
+    - debug:
+        var: result
+      when: result.changed == True

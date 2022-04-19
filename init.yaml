@@ -1,0 +1,31 @@
+---
+- hosts: all
+  gather_facts: no
+  tasks:
+    - name: Init node1
+      cisco.ios.ios_config:
+        lines:
+          - "router bgp 65536"
+          - "no network 192.0.3.0"
+          - "no network 192.0.4.0"
+        match: none
+      when: inventory_hostname == "node1"
+    
+    - name: Init node2
+      cisco.ios.ios_config:
+        lines:
+          - "router bgp 65536"
+          - "no network 198.51.101.0"
+          - "no network 198.51.102.0"
+        match: none
+      when: inventory_hostname == "node2"
+    
+    - name: Init node3
+      cisco.iosxr.iosxr_config:
+        lines:
+          - "router bgp 65536"
+          - "address-family ipv4 unicast"
+          - "no network 203.0.114.0/24"
+          - "no network 203.0.115.0/24"
+        match: none
+      when: inventory_hostname== "node3"
