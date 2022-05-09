@@ -1,4 +1,4 @@
-- name: Parse show hardware rate-limit output
+- name: Parse show ip bgp summary
   ansible.utils.cli_parse: 
     command: "show ip bgp summary"
     parser: 
@@ -8,13 +8,13 @@
 - debug:
     var: bgp_summary
 
-- name: Loop through mac address table entries
+- name: Loop through bgp summary to check for neighbor
   set_fact:
     neighbor_present: "yes"
   when: (health_check.bgp_neighbor == item.value['neighbor']) and  (item.value['state'] == 'up')
   loop: "{{ bgp_summary | dict2items }}"
 
-- name: Check for drop due to rate-limit
+- name: Check if the given neighbor is present
   assert:
     that:
       - neighbor_present is defined

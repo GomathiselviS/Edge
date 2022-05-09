@@ -1,6 +1,6 @@
 ---
 - name: Edge health check usecase
-  hosts: all
+  hosts: node1
   vars_files:
       - vars/main.yaml
   roles:
